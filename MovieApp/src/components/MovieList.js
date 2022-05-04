@@ -16,10 +16,10 @@ export class MovieList extends Component {
       currPage: 1,
     };
   }
-
+  // yh bas ek baar chlta h nd data lakr dedega bas 
   async componentDidMount() {
     const res = await axios.get(
-      `https://api.themoviedb.org/3/movie/popular?api_key=0b5415eb9bf023d556ef265b425e0e4a&language=en-US&page=${this.state.currPage}`
+      `https://api.themoviedb.org/3/movie/550?api_key=88b19c2010fd715dfd7118287687601b&language=en-US&page=${this.state.currPage}`
     );
     let movieData = res.data;
     console.log(movieData);
@@ -30,10 +30,10 @@ export class MovieList extends Component {
 
     console.log("mounting done with CDM third");
   }
-
+  // Tki next press krke next pages ki movies aaye
   changeMovies = async () => {
     const res = await axios.get(
-      `https://api.themoviedb.org/3/movie/popular?api_key=0b5415eb9bf023d556ef265b425e0e4a&language=en-US&page=${this.state.currPage}`
+      `https://api.themoviedb.org/3/movie/550?api_key=88b19c2010fd715dfd7118287687601b&language=en-US&page=${this.state.currPage}`
     );
     let movieData = res.data;
     console.log(movieData);
@@ -57,10 +57,9 @@ export class MovieList extends Component {
         parr: [...tempArr],
         currPage: this.state.currPage + 1,
       },
-      this.changeMovies
-    );
+      this.changeMovies);  // bcz setState async h nd vo last mn chlta tbtk page update hojata lkin kuch
+      // toh jse hi page change hojye fir movies change hojye 
   };
-
 
   handlePrevious =()=>{
       if(this.state.currPage!=1){
@@ -69,7 +68,6 @@ export class MovieList extends Component {
         } , this.changeMovies)
       }
   }
-
 
   handlePageClick =(value)=>{
        if(value!=this.state.currPage){
