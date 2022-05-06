@@ -14,12 +14,13 @@ export class MovieList extends Component {
       parr: [1],
       movies: [],
       currPage: 1,
+      favourites : []
     };
   }
-  // yh bas ek baar chlta h nd data lakr dedega bas 
+
   async componentDidMount() {
     const res = await axios.get(
-      `https://api.themoviedb.org/3/movie/550?api_key=88b19c2010fd715dfd7118287687601b&language=en-US&page=${this.state.currPage}`
+      `https://api.themoviedb.org/3/movie/popular?api_key=0b5415eb9bf023d556ef265b425e0e4a&language=en-US&page=${this.state.currPage}`
     );
     let movieData = res.data;
     console.log(movieData);
@@ -30,10 +31,10 @@ export class MovieList extends Component {
 
     console.log("mounting done with CDM third");
   }
-  // Tki next press krke next pages ki movies aaye
+
   changeMovies = async () => {
     const res = await axios.get(
-      `https://api.themoviedb.org/3/movie/550?api_key=88b19c2010fd715dfd7118287687601b&language=en-US&page=${this.state.currPage}`
+      `https://api.themoviedb.org/3/movie/popular?api_key=0b5415eb9bf023d556ef265b425e0e4a&language=en-US&page=${this.state.currPage}`
     );
     let movieData = res.data;
     console.log(movieData);
@@ -57,9 +58,10 @@ export class MovieList extends Component {
         parr: [...tempArr],
         currPage: this.state.currPage + 1,
       },
-      this.changeMovies);  // bcz setState async h nd vo last mn chlta tbtk page update hojata lkin kuch
-      // toh jse hi page change hojye fir movies change hojye 
+      this.changeMovies
+    );
   };
+
 
   handlePrevious =()=>{
       if(this.state.currPage!=1){
@@ -69,12 +71,41 @@ export class MovieList extends Component {
       }
   }
 
+
   handlePageClick =(value)=>{
        if(value!=this.state.currPage){
          this.setState({
            currPage : value
          } , this.changeMovies)
        }
+  }
+
+  handleFavourites=(movieObj)=>{
+      let oldData = JSON.parse(localStorage.getItem('movies-app') || '[]')
+
+      if(this.state.favourites.includes(movieObj.id)){
+                oldData = oldData.filter((movie)=> movie.id != movieObj.id)
+      }
+
+      else{
+        oldData.push(movieObj)
+      }
+
+      localStorage.setItem("movies-app" , JSON.stringify(oldData))
+      console.log(oldData)
+
+      this.handleFavouritesState()
+  }
+
+  handleFavouritesState =()=>{
+    let oldData = JSON.parse(localStorage.getItem('movies-app') || '[]')
+    let temp = oldData.map((movie)=>movie.id)
+
+    this.setState({
+      favourites : [...temp]
+    })
+
+
   }
 
   render() {
@@ -108,14 +139,17 @@ export class MovieList extends Component {
                 className="button-wrapper"
                 style={{ display: "flex", justifyContent: "center" }}
               >
-                {this.state.hover == movieElem.id && (
+                {this.state.hover == movieElem.id && 
                   <a
-                    href="#"
                     className="btn btn-primary movies-button text-center"
+                    onClick={()=> this.handleFavourites(movieElem)}
+
+                  
                   >
-                    Add to Favourites
+                    {this.state.favourites.includes(movieElem.id)? "Remove from Favorites" : 'Add to Favourites'} 
+                  
                   </a>
-                )}
+                }
               </div>
             </div>
           ))}

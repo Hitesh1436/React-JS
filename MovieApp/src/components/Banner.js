@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import { movies } from '../movieData'
+
+import {movies} from '../movieData'
 
 export class Banner extends Component {
+
   render() {
-    let movieElem = movies.results[Math.floor((Math.random()*10))]
-      let backDrop = '/6EdKBYkB1ssgGjc249ud1L55o8d.jpg'
+      let moviesElem = movies.results[Math.floor((Math.random() * 10))]
+      let backDrop =  moviesElem.backdrop_path
     return (
        <div className="card banner-card" >
        <img src={`https://image.tmdb.org/t/p/original${backDrop}`} className="card-img-top banner-img" alt="..."/>
