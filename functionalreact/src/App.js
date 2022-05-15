@@ -1,11 +1,12 @@
 import './App.css';
 import Test from './components/Test';
 import Demo from './components/Demo';
+import Ue1 from './components/Ue1';
 
 function App() {
   return (
     <div className = "App">
-      <Demo/>
+      <Ue1/>
     </div>
   );
 }
