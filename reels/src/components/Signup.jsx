@@ -2,9 +2,7 @@ import React, { useState } from 'react'
 import { auth, db } from "../firebase";
 import { createUserWithEmailAndPassword }
     from "firebase/auth";
-import {  addDoc,collection } from "firebase/firestore";
-
-
+import { addDoc, collection, setDoc, doc } from "firebase/firestore";
 function Signup() {
     let [email, setEmail] = useState("");
     let [password, setPassword] = useState("");
@@ -12,7 +10,6 @@ function Signup() {
     let [loader, setLoader] = useState(false);
     let [error, setError] = useState("");
     let [user, setUser] = useState("");
-
     async function processSignup() {
         try {
             setLoader(true);
@@ -20,18 +17,25 @@ function Signup() {
                 createUserWithEmailAndPassword(auth, email, password)
             // console.log(userCred.user);
             // firestore andar user create krunga
-            const docRef = await addDoc(collection(db, "users"), {
-                // "email":email,
+            await setDoc(doc(db, "users", userCred.user.uid), {
                 email,
                 name,
                 reelsIds: [],
                 profileImgUrl: "",
                 userId: userCred.user.uid
             });
-            
-            setUser(userCred.user);
 
+            // await addDoc(collection(db, "users"), {
+            //     // "email":email,
+            //     email,
+            //     name,
+            //     reelsIds: [],
+            //     profileImgUrl: "",
+            //     userId: userCred.user.uid
+            // });
+            setUser(userCred.user);
         } catch (err) {
+            console.log(err);
             setError(err.message);
             // after some time -> error message remove 
             setTimeout(() => {
@@ -40,7 +44,6 @@ function Signup() {
         }
         setLoader(false);
     }
-
     return (
         <>
             {error != "" ? <h1>Error is {error}</h1> :
@@ -50,16 +53,23 @@ function Signup() {
                             <h1>signed up user is  {user.uid}</h1>
                         </> :
                         <>
-                            <input type="email" onChange={(e) => {setEmail(e.target.value) }} value={email} placeholder="email" ></input>
+                            <input type="email" onChange={(e) => {
+                                setEmail(e.target.value)
+                            }} value={email} placeholder="email" ></input>
                             <br></br>
-                            <input type="password" onChange={(e) => { setPassword(e.target.value) }} value={password} placeholder="password"></input>
+                            <input type="password" onChange={(e) => { setPassword(e.target.value) }
+                            } value={password} placeholder="password"
+                            ></input>
                             <br></br>
-                            <input type="text" onChange={(e) => { setName(e.target.value) }} value={name} placeholder="Full Name"></input>
+                            <input type="text" onChange={(e) => { setName(e.target.value) }} value={name} placeholder="Full Name"
+                            ></input>
                             <br></br>
-                            <button type="click" onClick={processSignup} >Signup</button>
+                            <button type="click" onClick={processSignup}
+                            >Signup</button>
                         </>
             }
         </>
+
     )
 }
 

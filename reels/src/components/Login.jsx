@@ -34,11 +34,12 @@ function Login() {
     setLoader(false);
   }
   const signout = async function () {
-    // ye call hoga 
+    // ye ake call hoga 
     await signOut(auth);
     setUser(null);
   }
   useEffect(() => {
+    // ake call hogya hai
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
@@ -49,8 +50,7 @@ function Login() {
         // User is signed out
         // ...
         setUser(null);
-      }
-      
+      }  
     });
   }, []);
   return (
