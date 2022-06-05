@@ -5,8 +5,10 @@ function Bat() {
     const [tosell, setTochangeBat] = useState("");
     const sellBat = () => {
         // bat ,value
-        setBat(bat - tosell);
-
+        if(bat - tosell <0){
+            return bat;
+        }
+        setBat(bat - Number(tosell));
         setTochangeBat("");
     }
     const buyBat = () => {

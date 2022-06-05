@@ -16,11 +16,10 @@ function reducer(state, action) {
                 bat: state.bat - state.value,
                 value: ""
             }
-            break;
+            // break;
         case "buy_bat":
             return {
-                bat: state.bat +
-                    Number(state.value),
+                bat: state.bat + Number(state.value),
                 value: ""
             }
         case "set_value":
