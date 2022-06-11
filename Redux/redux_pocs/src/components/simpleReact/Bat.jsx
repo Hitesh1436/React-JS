@@ -5,24 +5,31 @@ function Bat() {
     const [tosell, setTochangeBat] = useState("");
     const sellBat = () => {
         // bat ,value
-        if(bat - tosell <0){
-            return bat;
-        }
-        setBat(bat - Number(tosell));
+        setBat(bat - tosell);
+
         setTochangeBat("");
     }
     const buyBat = () => {
         // bat ,value
-        setBat(bat + tosell);
+        setBat(bat + Number(tosell));
         setTochangeBat("");
     }
     return (
         <>
             <h1>Bat</h1>
             <h2>No of Bat:{bat}</h2>
-            <input type="text" value={tosell}onChange={(e) => { let value = e.target.value;setTochangeBat(value);}} /> 
-            <button onClick={sellBat}>Sell</button>
-            <button onClick={buyBat}>Buy</button>
+            <input type="text" value={tosell}
+                onChange={(e) => {
+                    let value = e.target.value;
+                    // value attribute change 
+                    setTochangeBat(value);
+                }} />
+            <button
+                onClick={sellBat}
+            >Sell</button>
+            <button
+                onClick={buyBat}
+            >Buy</button>
         </>
 
     )

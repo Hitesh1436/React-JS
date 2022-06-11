@@ -16,18 +16,21 @@ function reducer(state, action) {
                 bat: state.bat - state.value,
                 value: ""
             }
-            // break;
+            break;
         case "buy_bat":
+
             return {
-                bat: state.bat + Number(state.value),
+                bat: state.bat +
+                    Number(state.value),
                 value: ""
             }
         case "set_value":
+
             return {
                 bat: state.bat,
                 value: action.payload
             }
-            default: console.log("Wrong type");
+
     }
 }
 function BatuseReducer() {
@@ -37,16 +40,26 @@ function BatuseReducer() {
         <>
             <h1>Bat</h1>
             <h2>No of Bat:{state.bat}</h2>
-            <input type="text" value={state.value} onChange={(e) => {
+            <input type="text" value={state.value}
+                onChange={(e) => {
                     let value = e.target.value;
                     dispatch({
                         type: "set_value",
                         payload: value
                     })
                 }} />
-            <button onClick={() => {dispatch({ type: "sell_bat" })}}>Sell</button>
-            <button onClick={() => {dispatch({ type: "buy_bat" })}}>Buy</button>
+            <button
+                onClick={() => {
+                    dispatch({ type: "sell_bat" })
+                }}
+            >Sell</button>
+            <button
+                onClick={() => {
+                    dispatch({ type: "buy_bat" })
+                }}
+            >Buy</button>
         </>
+
     )
 }
 export default BatuseReducer;
