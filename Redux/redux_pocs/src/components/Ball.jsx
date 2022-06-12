@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { connect } from "react-redux";
 function Ball(props) {
     console.log(props)
-    return (
-    < >
+    return (< >
         <h1>Balls</h1>
         <h2>No of Balls:{props.balls}</h2>
         <button onClick={props.buyBall}>+</button>
@@ -15,6 +14,7 @@ function Ball(props) {
 const mapStateToProps = (store) => {
     return store;
 }
+// dispatch
 const mapDispatchtoProps = (dispatch) => {
     return {
         sellBall: () => {
@@ -32,6 +32,7 @@ const mapDispatchtoProps = (dispatch) => {
 // to give access to the component to two things
 //  first store  -> mapsstatetoprops
 // second  -> dispatch -> mapdispatchtoprops
-const connectdWIthpropsFns = connect(mapStateToProps, mapDispatchtoProps)
+const connectdWIthpropsFns = connect(mapStateToProps, mapDispatchtoProps);
+
 const connectedWithBall = connectdWIthpropsFns(Ball);
 export default connectedWithBall;
